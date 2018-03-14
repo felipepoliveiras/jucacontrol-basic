@@ -1,0 +1,51 @@
+*{
+	font-family: 'Segoe UI';
+}
+
+.aln-items-center{
+	align-items: center;
+}
+
+body{
+	margin: 0px;
+	min-height: 100vh;
+}
+
+.btn{
+	background-color: white;
+	border-radius: 25px;
+	border-style: solid;
+	border-color: rgb(30, 30, 30);
+	color: black;
+	padding: 8px 60px;
+}
+
+.container{
+	margin: auto;
+	max-width: 1000px;
+	width: 100%;
+}
+
+.d-flex{
+	display: flex;
+}
+
+.d-flex > *{
+	flex: 1;
+}
+
+.d-flex > * + *{
+	margin-left: 32px;
+}
+
+.h-100vh{
+	height: 100vh;
+}
+
+.h-md{
+	height: 680px;
+}
+
+input{
+	padding: 4px 16px;
+}
