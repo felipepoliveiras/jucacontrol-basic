@@ -1,0 +1,32 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<c:url value="/" var="raiz" />
+<c:url value="/assets" var="assets" />
+<c:url value="/app/adm/categoria/salvar" var="urlSalvarCategoria" />
+<c:url value="/app/adm/usuario/novo" var="urlNovoUsuario" />
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<c:import url="../templates/head.jsp"/>
+</head>
+<body>
+	<c:import url="../templates/header.jsp"/>
+	<main class="container">
+		<a href="${urlNovoUsuario}" class="btn btn-blue d-block ma-l-auto ma-t-s" style="max-width: 180px"> Novo usuário</a>
+		<h1>Usuários</h1>
+		<section id="sectionCategorias">
+			<h2>Usuários do sistema</h2>
+			<c:forEach items="${usuarios}" var="usuario">
+			
+			</c:forEach>
+		</section>
+	</main>
+	<c:import url="../templates/botoesFlutuantes.jsp" />
+</body>
+</html>

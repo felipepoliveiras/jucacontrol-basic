@@ -25,14 +25,14 @@ public class AutenticacaoPorSessaoInterceptor extends HandlerInterceptorAdapter{
 			
 			//Verifica se o usuário não está logado
 			if(!session.isUsuarioLogado()) {
-				response.setStatus(401);
+				response.sendError(401);
 				return false;
 			}
 			
 			//Verifica se a url necessita de usuário administrador
 			boolean necessitaSerAdm = request.getRequestURI().contains("/adm");
 			if(necessitaSerAdm && session.getUsuarioLogado().getTipo() != TiposUsuario.ADMINISTRADOR) {
-				response.setStatus(403);
+				response.sendError(403);
 				return false;
 			}
 		}

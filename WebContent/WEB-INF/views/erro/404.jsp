@@ -7,8 +7,13 @@
 <html>
 <head>
 	<c:import url="../templates/head.jsp" />
+	<style>
+		h1{
+			animation : none;
+		}
+	</style>
 </head>
 <body>
-	<h1>Você não possuí permissão de acessar essa página.</h1>
+	<h1>Você não pode acessar esta página</h1>
 </body>
 </html>

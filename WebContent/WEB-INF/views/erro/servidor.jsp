@@ -9,6 +9,6 @@
 	<c:import url="../templates/head.jsp" />
 </head>
 <body>
-	<h1>Você não possuí permissão de acessar essa página.</h1>
+	<h1>Ocorreu um erro no servidor</h1>
 </body>
 </html>

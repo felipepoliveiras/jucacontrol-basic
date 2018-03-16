@@ -11,3 +11,5 @@
 <title>Juca Control</title>
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
 <link rel="stylesheet" href="${cssRaiz}/estilo.css">
+<link rel="stylesheet" href="${cssRaiz}/grid.css">
+

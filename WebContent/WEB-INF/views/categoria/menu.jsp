@@ -6,6 +6,7 @@
 
 <c:url value="/" var="raiz" />
 <c:url value="/assets" var="assets" />
+<c:url value="/app/adm/categoria" var="urlEditarCategoria" />
 <c:url value="/app/adm/categoria/salvar" var="urlSalvarCategoria" />
 
 <!DOCTYPE html>
@@ -18,28 +19,51 @@
 	<main>
 		<h1>Categorias de Ocorrência</h1>
 		<section id="sectionCategorias" class="container">
-			<h2>Nova Categoria</h2>
-			<form:form action="${urlSalvarCategoria}" method="post" modelAttribute="categoria">
-				<label>
-					Nome
-					<form:input path="nome" type="text"/>
-				</label>
-				<button type="submit" class="btn">SALVAR</button>
-			</form:form>
-			
-			<%-- Tabela de ocorrências --%>
-			<table id="tabelaOcorrencias" class="table container read-container ma-t-l">
-				<thead>
-					<tr>
-						<th>Categorias</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${ocorrencias}" var="ocorrencia">
-					
-					</c:forEach>
-				</tbody>
-			</table>
+		<div class="flex-grid">
+			<div class="row">
+				<div class="col flex-1">
+					<h2>Nova Categoria</h2>
+					<form:form action="${urlSalvarCategoria}" method="post" modelAttribute="categoria">
+						<form:hidden path="id"/>
+						<div class="flex-grid">
+							<div class="row">
+								<div class="col flex-1">
+									<label>
+										Nome
+										<form:input path="nome" type="text"/>
+									</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<button type="submit" class="btn">SALVAR</button>
+								</div>
+							</div>
+						</div>
+					</form:form>
+				</div>
+				<div class="col flex-1">
+					<h2>Categorias Cadastradas</h2>
+					<%-- Tabela de ocorrências --%>
+					<table id="tabelaOcorrencias" class="table container read-container ma-t-l">
+						<thead>
+							<tr>
+								<th>Categorias</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${categorias}" var="categoria">
+								<tr>
+									<td>
+										<a href="${urlEditarCategoria}?id=${categoria.id}">${categoria.nome}</a>
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 		</section>
 	</main>
 	<c:import url="../templates/botoesFlutuantes.jsp" />

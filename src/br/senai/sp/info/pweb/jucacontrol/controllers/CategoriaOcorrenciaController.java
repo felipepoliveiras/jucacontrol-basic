@@ -50,7 +50,7 @@ public class CategoriaOcorrenciaController {
 		}
 		
 		//Verifica se o nome já existe
-		if(categoriaOcorrenciaDao.buscarPorCampo("nome", categoriaOcorrencia).getNome() != null) {
+		if(!categoriaOcorrenciaDao.buscarPorCampo("nome", categoriaOcorrencia.getNome()).isEmpty()) {
 			brCategoriaOcorrencia.addError(new FieldError("categoriaOcorrencia", "nome", "Este nome já esta sendo utilizado no sistema"));
 			
 			model.addAttribute("categoria", categoriaOcorrencia);
@@ -60,8 +60,8 @@ public class CategoriaOcorrenciaController {
 		//Persiste no banco de dados
 		categoriaOcorrenciaDao.inserir(categoriaOcorrencia);
 		
-		//Redireciona para pagina de ocorrencia
-		return "redirect:/app/adm/ocorrencia";
+		//Redireciona para pagina de categorias
+		return "redirect:/app/adm/categoria";
 	}
 
 }

@@ -4,7 +4,7 @@
 
 <c:url value="/" var="raiz" />
 <c:url value="/app" var="urlHome" />
-<c:url value="/app/usuario/sair" var="urlSair" />
+<c:url value="/sair" var="urlSair" />
 <c:url value="/assets" var="assets" />
 
 <style>

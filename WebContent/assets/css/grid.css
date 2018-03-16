@@ -1,0 +1,19 @@
+*{
+	box-sizing: border-box;;
+}
+
+.col *{
+	width: 100%;
+}
+
+.col + .col{
+	margin-left: 16px;
+}
+
+.flex-grid .row{
+	display: flex;
+}
+
+.row + .row{
+	margin-top: 16px;
+}
