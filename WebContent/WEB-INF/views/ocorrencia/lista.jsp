@@ -5,32 +5,68 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:url value="/" var="raiz" />
-<c:url value="/usuario/autenticar" var="urlAutenticarUsuario" />
+<c:url value="/assets" var="assets" />
+<c:url value="/app/ocorrencia" var="urlVisualizarOcorrencia" />
 
 <!DOCTYPE html>
 <html>
 <head>
 	<c:import url="../templates/head.jsp"/>
 </head>
-<body class="d-flex aln-items-center">
-	<div class="aln-items-center container d-flex" style="height: 500px;">
-		<div>
-			<img alt="juca control logo" src="${raiz}assets/images/jucacontrol_logo.png">
-		</div>
-		<div>
-			<form:form modelAttribute="usuario" action="${urlAutenticarUsuario}" method="post" style="color: white">
-				<label>
-					E-mail
-					<form:input path="email" type="email" required="required" maxlength="120" id="inputEmail" />
-					<form:errors path="email" />
-				</label>
-				<label>
-					Senha
-					<input name="senha" type="password" required="required" maxlength="20" />
-				</label>
-				<button class="btn" type="submit">ENTRAR</button>
-			</form:form>
-		</div>	
-	</div>
+<body>
+	<c:import url="../templates/header.jsp"/>
+	<main>
+		<h1 class="fx-slide-in">Ocorrências</h1>
+		<section id="sectionOcorrencias" class="container">
+			<h2>Classificar por: </h2>
+			<%--Filtros de busca --%>
+			<form>
+				<select name="filtro">
+					<option value="TODOS">Todos</option>
+					<option value="EM_ATENDIMENTO">Em atendimento</option>
+					<option value="AGUARDANDO">Aguardando resposta</option>
+				</select>
+			</form>
+			
+			<%-- Tabela de ocorrências --%>
+			<table id="tabelaOcorrencias" class="table container read-container">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Ocorrências</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${ocorrencias}" var="ocorrencia">
+						<tr>
+							<%--- Sinalizador de status --%>
+							<td>${ocorrencia.status}</td>
+							<%-- Descrição da ocorrência --%>
+							<td>
+								<p class="ocorrencia-id">
+									<a href="${urlVisualizarOcorrencia}?id=${ocorrencia.id}">
+										${ocorrencia.id}
+									</a>
+								</p>
+								<h4>${ocorrencia.titulo}</h4>
+								<p class="ocorrencia-detalhe"><b class="color-pink">Data de abertura: </b>
+									${ocorrencia.dataAbertura}
+								</p>
+								<p class="ocorrencia-detalhe"><b class="color-pink">Data de abertura: </b>
+									${ocorrencia.dataEncerramento}
+								</p>
+							</td>
+							<%--Quem atendeu ocorrencia/link de atendimento--%>
+							<td>
+								
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</section>
+	</main>
+	<c:import url="../templates/botoesFlutuantes.jsp"/>
 </body>
 </html>

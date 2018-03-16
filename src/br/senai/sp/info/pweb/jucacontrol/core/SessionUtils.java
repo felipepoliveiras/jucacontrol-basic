@@ -23,6 +23,10 @@ public class SessionUtils {
 		session.setAttribute(CHAVE_USUARIO_LOGADO, usuario);
 	}
 	
+	public boolean isUsuarioLogado() {
+		return session.getAttribute(CHAVE_USUARIO_LOGADO) != null;
+	}
+	
 	public void invalidarSessao() {
 		session.invalidate();
 	}
