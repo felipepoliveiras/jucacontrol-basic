@@ -10,12 +10,14 @@
 
 <%--Botões de gerenciamento --%>
 <div class="float-btn-group">
-	<a title="Usuários do sistema" class="btn" href="${urlVisualizarUsuarios}">
-		<img alt="Usuários do sistema" src="${assets}/images/user.png">
-	</a>
-	<a title="Categorias de ocorrências" class="btn" href="${urlVisualizarCategorias}">
-		<img alt="Categorias de ocorrências" src="${assets}/images/label.png">
-	</a>
+	<c:if test="${usuarioLogado.tipo eq 'ADMINISTRADOR'}">
+		<a title="Usuários do sistema" class="btn" href="${urlVisualizarUsuarios}">
+			<img alt="Usuários do sistema" src="${assets}/images/user.png">
+		</a>
+		<a title="Categorias de ocorrências" class="btn" href="${urlVisualizarCategorias}">
+			<img alt="Categorias de ocorrências" src="${assets}/images/label.png">
+		</a>
+	</c:if>
 	<a title="Visualizar ocorrências" class="btn" href="${urlVisualizarOcorrencias}">
 		<img alt="Abrir nova ocorrência" src="${assets}/images/ocorrencia.png">
 	</a>

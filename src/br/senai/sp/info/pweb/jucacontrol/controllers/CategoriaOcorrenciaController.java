@@ -2,6 +2,7 @@ package br.senai.sp.info.pweb.jucacontrol.controllers;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,16 +50,23 @@ public class CategoriaOcorrenciaController {
 			return "categoria/menu";
 		}
 		
-		//Verifica se o nome já existe
-		if(!categoriaOcorrenciaDao.buscarPorCampo("nome", categoriaOcorrencia.getNome()).isEmpty()) {
-			brCategoriaOcorrencia.addError(new FieldError("categoriaOcorrencia", "nome", "Este nome já esta sendo utilizado no sistema"));
+		if(categoriaOcorrencia.getId() != null) {
 			
-			model.addAttribute("categoria", categoriaOcorrencia);
-			return "categoria/menu";
+			//Verifica se o nome já existe
+			if(!categoriaOcorrenciaDao.buscarPorCampo("nome", categoriaOcorrencia.getNome()).isEmpty()) {
+				brCategoriaOcorrencia.addError(new FieldError("categoriaOcorrencia", "nome", "Este nome já esta sendo utilizado no sistema"));
+				
+				model.addAttribute("categoria", categoriaOcorrencia);
+				return "categoria/menu";
+			}
+			
+			categoriaOcorrenciaDao.inserir(categoriaOcorrencia);
+		}else {
+			CategoriaOcorrencia categoraAlterada = categoriaOcorrenciaDao.buscar(categoriaOcorrencia.getId());
+			BeanUtils.copyProperties(categoriaOcorrencia, categoraAlterada);
+			
+			categoriaOcorrenciaDao.alterar(categoraAlterada);
 		}
-		
-		//Persiste no banco de dados
-		categoriaOcorrenciaDao.inserir(categoriaOcorrencia);
 		
 		//Redireciona para pagina de categorias
 		return "redirect:/app/adm/categoria";

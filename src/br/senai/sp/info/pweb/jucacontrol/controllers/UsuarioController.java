@@ -91,6 +91,7 @@ public class UsuarioController {
 		if(usuario.getId() == null) {
 			usuarioDao.inserir(usuario);
 		}else {
+			
 			usuarioDao.alterar(usuario);
 		}
 		

@@ -18,7 +18,7 @@
 <body>
 	<c:import url="../templates/header.jsp"/>
 	<main class="container">
-		<a href="${urlNovoUsuario}" class="btn btn-blue d-block ma-l-auto ma-t-s" style="max-width: 180px"> Novo usuário</a>
+		<a href="${urlNovoUsuario}" class="btn btn-blue d-block ma-l-auto ma-t-s" style="max-width: 240px"> Novo usuário</a>
 		<h1>Usuários</h1>
 		<section id="sectionCategorias">
 			<h2>Usuários do sistema</h2>

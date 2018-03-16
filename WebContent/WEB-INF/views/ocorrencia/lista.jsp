@@ -7,6 +7,8 @@
 <c:url value="/" var="raiz" />
 <c:url value="/assets" var="assets" />
 <c:url value="/app/ocorrencia" var="urlVisualizarOcorrencia" />
+<c:url value="/app/ocorrencia/nova" var="urlNovaOcorrencia" />
+
 
 <!DOCTYPE html>
 <html>
@@ -15,9 +17,10 @@
 </head>
 <body>
 	<c:import url="../templates/header.jsp"/>
-	<main>
+	<main class="container">
+		<a href="${urlNovaOcorrencia}" class="btn btn-red d-block ma-l-auto ma-t-s" style="max-width: 220px"> Abrir ocorrência</a>
 		<h1 class="fx-slide-in">Ocorrências</h1>
-		<section id="sectionOcorrencias" class="container">
+		<section id="sectionOcorrencias">
 			<h2>Classificar por: </h2>
 			<%--Filtros de busca --%>
 			<form>
