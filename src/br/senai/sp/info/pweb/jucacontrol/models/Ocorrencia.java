@@ -94,4 +94,11 @@ public class Ocorrencia {
 		this.concluido = concluido;
 	}
 
+	public CategoriaOcorrencia getCategoria() {
+		return categoria;
+	}
+	
+	public void setCategoria(CategoriaOcorrencia categoria) {
+		this.categoria = categoria;
+	}
 }
