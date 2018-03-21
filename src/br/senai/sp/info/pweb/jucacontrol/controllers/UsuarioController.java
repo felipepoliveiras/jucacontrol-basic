@@ -1,7 +1,15 @@
 package br.senai.sp.info.pweb.jucacontrol.controllers;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +18,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
+import br.senai.sp.info.pweb.jucacontrol.core.LocalStorage;
 import br.senai.sp.info.pweb.jucacontrol.core.SessionUtils;
 import br.senai.sp.info.pweb.jucacontrol.dao.UsuarioDAO;
 import br.senai.sp.info.pweb.jucacontrol.models.TiposUsuario;
@@ -25,6 +36,12 @@ public class UsuarioController {
 	@Autowired
 	private SessionUtils sessionUtils;
 	
+	@Autowired
+	private LocalStorage localStorage;
+	
+	@Autowired
+	private ServletContext context;
+	
 	@GetMapping(value = {"/", ""})
 	public String abrirLogin(Model model) {
 		
@@ -36,10 +53,38 @@ public class UsuarioController {
 		}
 	}
 	
+	@GetMapping("/app/adm/usuario/editar")
+	public String abrirEdicao(Model model, @RequestParam(name = "id", required = true) Long id, HttpServletResponse response) throws IOException {
+		Usuario usuario = usuarioDao.buscar(id);
+		
+		if(usuario == null) {
+			response.sendError(404, "Usuário não encontrado");
+			return null;
+		}
+		
+		//Adicionando o modelo
+		model.addAttribute("usuario", usuario);
+		return "usuario/form";
+	}
+	
 	@GetMapping("/app/adm/usuario")
 	public String abrirLista(Model model) {
 		
-		model.addAttribute("usuarios", usuarioDao.buscarTodos());
+		List<Usuario> usuarios = usuarioDao.buscarTodos();
+		
+		//Verifica se o usuário possui foto
+		for (Usuario usuario : usuarios) {
+			//Verifica se existe uma foto no servidor com o id do usuário
+			File arquivoFoto = localStorage.getArquivo("/resources/fotos/" + usuario.getId());
+			System.out.println(arquivoFoto.getAbsolutePath());
+			if(arquivoFoto.exists()) {
+				usuario.setCaminhoFoto(localStorage.getCaminhoRelativo("/resources/fotos/" + usuario.getId()));
+			}else {
+				usuario.setCaminhoFoto(localStorage.getCaminhoRelativo("/assets/images/user.png"));
+			}
+		}
+		
+		model.addAttribute("usuarios", usuarios);
 		
 		return "usuario/lista";
 	}
@@ -47,13 +92,6 @@ public class UsuarioController {
 	@GetMapping("/app/adm/usuario/novo")
 	public String abrirFormNovoUsuario(Model model) {
 		model.addAttribute("usuario", new Usuario());
-		
-		return "usuario/form";
-	}
-	
-	@GetMapping("/app/adm/usuario/editar")
-	public String abriFormEditarUsuario(@RequestParam(name = "id", required = true) Long id, Model model) {
-		model.addAttribute("usuario", usuarioDao.buscar(id));
 		
 		return "usuario/form";
 	}
@@ -72,11 +110,29 @@ public class UsuarioController {
 		return "usuario/alterarSenha";
 	}
 	
-	@PostMapping({"/app/adm/usuario/salvar"})
-	public String salvar(@Valid Usuario usuario, BindingResult brUsuario, 
-						@RequestParam(name = "isAdministrador", required = false) Boolean administrador) {
+	@GetMapping("/app/adm/usuario/deletar")
+	public String deletar(@RequestParam(required = true) Long id, HttpServletResponse response) throws IOException {
+		Usuario usuarioBuscado = usuarioDao.buscar(id);
 		
-		if(brUsuario.hasFieldErrors()) {
+		if(usuarioBuscado == null) {
+			response.sendError(404, "O usuário não existe");
+			return null;
+		}
+		
+		usuarioDao.deletar(usuarioBuscado);
+		return "redirect:/app/adm/usuario";
+	}
+	
+	@PostMapping( value = {"/app/adm/usuario/salvar"}, consumes = {"multipart/form-data"})
+	public String salvar(@Valid  Usuario usuario, BindingResult brUsuario, 
+						@RequestParam(name = "isAdministrador", required = false) Boolean administrador,
+						@RequestPart(name = "foto", required = false) MultipartFile foto,
+						HttpServletRequest request) {
+		
+		//Se for um cadastro, valida qualquer campo...
+		if(usuario.getId() == null && brUsuario.hasFieldErrors()) {
+			return "usuario/form";
+		}else if(brUsuario.hasFieldErrors("nome") || brUsuario.hasFieldErrors("sobrenome") || brUsuario.hasFieldErrors("email")) {
 			return "usuario/form";
 		}
 		
@@ -85,14 +141,26 @@ public class UsuarioController {
 			usuario.setTipo(TiposUsuario.ADMINISTRADOR);
 		}
 		
-		//Hasheia a senha do usuário
-		usuario.hashearSenha();
-		
 		if(usuario.getId() == null) {
+			//Hasheia a senha do usuário
+			usuario.hashearSenha();
+			
 			usuarioDao.inserir(usuario);
 		}else {
-			
-			usuarioDao.alterar(usuario);
+			Usuario usuarioBuscado = usuarioDao.buscar(usuario.getId());
+			BeanUtils.copyProperties(usuario, usuarioBuscado, "id", "senha");
+			System.out.println(usuarioBuscado.getSenha());
+			System.out.println(usuarioBuscado.getId());
+			usuarioDao.alterar(usuarioBuscado);
+		}
+		
+		//Realiza operações de foto
+		if(foto != null) {
+			try {
+				localStorage.armazenar("/resources/fotos", usuario.getId().toString(), foto.getBytes());
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 		}
 		
 		return "redirect:/app/adm/usuario";

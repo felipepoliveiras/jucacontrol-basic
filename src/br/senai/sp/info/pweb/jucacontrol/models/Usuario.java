@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -42,6 +43,9 @@ public class Usuario {
 	@Size(min = 1, max = 64)
 	@NotNull
 	private String senha;
+	
+	@Transient
+	private String caminhoFoto;
 
 	public Long getId() {
 		return id;
@@ -93,5 +97,13 @@ public class Usuario {
 	
 	public void hashearSenha() {
 		this.senha = DigestUtils.md5DigestAsHex(this.senha.getBytes());
+	}
+	
+	public String getCaminhoFoto() {
+		return caminhoFoto;
+	}
+	
+	public void setCaminhoFoto(String caminhoFoto) {
+		this.caminhoFoto = caminhoFoto;
 	}
 }

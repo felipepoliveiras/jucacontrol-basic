@@ -6,7 +6,8 @@
 
 <c:url value="/" var="raiz" />
 <c:url value="/assets" var="assets" />
-<c:url value="/app/adm/categoria" var="urlEditarCategoria" />
+<c:url value="/app/adm/categoria" var="urlCategorias" />
+<c:url value="/app/adm/categoria/deletar" var="urlDeletarCategoria" />
 <c:url value="/app/adm/categoria/salvar" var="urlSalvarCategoria" />
 
 <!DOCTYPE html>
@@ -22,7 +23,14 @@
 		<div class="flex-grid">
 			<div class="row">
 				<div class="col flex-1">
-					<h2>Nova Categoria</h2>
+					<c:choose>
+						<c:when test="${empty categoria.id}">
+							<h2>Nova Categoria</h2>
+						</c:when>
+						<c:otherwise>
+							<h2>Editando categoria: ${categoria.nome}</h2>
+						</c:otherwise>
+					</c:choose>
 					<form:form action="${urlSalvarCategoria}" method="post" modelAttribute="categoria">
 						<form:hidden path="id"/>
 						<div class="flex-grid">
@@ -36,8 +44,16 @@
 							</div>
 							<div class="row">
 								<div class="col">
-									<button type="submit" class="btn">SALVAR</button>
+									<button type="submit" class="btn btn-blue">SALVAR</button>
 								</div>
+								<c:if test="${not empty categoria.id}">
+									<div class="col">
+										<a class="btn" href="${urlCategorias}">NOVO</a>
+									</div>
+									<div class="col">
+										<a class="btn btn-red" href="${urlDeletarCategoria}?id=${categoria.id}">DELETAR</a>
+									</div>			
+								</c:if>
 							</div>
 						</div>
 					</form:form>
@@ -55,7 +71,7 @@
 							<c:forEach items="${categorias}" var="categoria">
 								<tr>
 									<td>
-										<a href="${urlEditarCategoria}?id=${categoria.id}">${categoria.nome}</a>
+										<a href="${urlCategorias}?id=${categoria.id}">${categoria.nome}</a>
 									</td>
 								</tr>
 							</c:forEach>

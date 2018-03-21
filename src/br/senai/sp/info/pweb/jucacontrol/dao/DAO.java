@@ -23,6 +23,9 @@ public interface DAO<T> {
 	public void alterar(T obj);
 	
 	@Transactional
+	public void deletar(Long id);
+	
+	@Transactional
 	public void deletar(T obj);
 	
 	@Transactional

@@ -39,6 +39,17 @@ public class CategoriaOcorrenciaController {
 		
 		return "categoria/menu";
 	}
+
+	@GetMapping("/categoria/deletar")
+	public String deletar(@RequestParam(name = "id", required = true) Long id) {
+		CategoriaOcorrencia categoriaBuscada = categoriaOcorrenciaDao.buscar(id);
+		
+		if(categoriaBuscada != null) {
+			categoriaOcorrenciaDao.deletar(categoriaBuscada);
+		}
+		
+		return "redirect:/app/adm/categoria";
+	}
 	
 	
 	@PostMapping("/categoria/salvar")
@@ -50,7 +61,7 @@ public class CategoriaOcorrenciaController {
 			return "categoria/menu";
 		}
 		
-		if(categoriaOcorrencia.getId() != null) {
+		if(categoriaOcorrencia.getId() == null) {
 			
 			//Verifica se o nome já existe
 			if(!categoriaOcorrenciaDao.buscarPorCampo("nome", categoriaOcorrencia.getNome()).isEmpty()) {

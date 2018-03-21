@@ -52,6 +52,11 @@ public abstract class AbstractJPA<T> implements DAO<T>{
 	public void deletar(T obj) {
 		getSession().delete(obj);
 	}
+	
+	@Override
+	public void deletar(Long id) {
+		this.deletar(buscar(id));	
+	}
 
 	@Override
 	public void inserir(T obj) {

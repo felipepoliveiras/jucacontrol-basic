@@ -6,7 +6,9 @@
 
 <c:url value="/" var="raiz" />
 <c:url value="/assets" var="assets" />
+<c:url value="/app/adm/usuario/deletar" var="urlUsuarioDeletar" />
 <c:url value="/app/adm/usuario/salvar" var="urlSalvarUsuario" />
+
 
 <!DOCTYPE html>
 <html>
@@ -17,16 +19,14 @@
 	<c:import url="../templates/header.jsp"/>
 	<main class="container read-container">
 		<h1>Cadastro de Usuário</h1>
-		<form:form action="${urlSalvarUsuario}" method="post" modelAttribute="usuario" class="labels-d-block">
+		<form:form action="${urlSalvarUsuario}" method="post" modelAttribute="usuario" class="labels-d-block" enctype="multipart/form-data">
 			<form:hidden path="id"/>
 			<div class="flex-grid">
 				<div class="row">
 					<div class="col flex-1">
 						<label for="inputNome">NOME</label>
 						<form:input path="nome" type="text" id="inputNome"/>
-						<s:hasBindErrors name="nome">
-							<form:errors path="nome"/>
-						</s:hasBindErrors>
+						<form:errors path="nome"/>
 					</div>
 					<div class="col flex-2">
 						<label for="inputSobrenome">SOBRENOME</label>
@@ -39,26 +39,37 @@
 						<form:input path="email" type="email" id="inputEmail"/>
 					</div>
 				</div>
+				<c:if test="${empty usuario.id}">
+					<div class="row">
+						<div class="col flex-1">
+							<label for="inputSenha">SENHA</label>
+							<input name="senha" type="password" id="inputSenha"/>
+						</div>
+						<div class="col flex-1">
+							<label for="inputConfirmaSenha">CONFIRMAR SENHA</label>
+							<input type="password" id="inputConfirmaSenha"/>
+						</div>
+					</div>
+				</c:if>
 				<div class="row">
 					<div class="col flex-1">
-						<label for="inputSenha">SENHA</label>
-						<form:input path="senha" type="password" id="inputSenha"/>
-					</div>
-					<div class="col flex-1">
-						<label for="inputConfirmaSenha">CONFIRMAR SENHA</label>
-						<input type="password" id="inputConfirmaSenha"/>
+						<label for="inputFoto">Foto de Perfil</label>
+						<input type="file" name="foto" accept=".png, .jpg, .jpeg">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col">
 						<label>
 							Administrador
-							<input type="checkbox" name="isAdministrador" id="inputAdministrador" class="d-inline">
+							<input type="checkbox" name="isAdministrador" id="inputAdministrador" class="d-inline" checked="checked">
 						</label>
 					</div>
 				</div>
 			</div>
 			<button type="submit" class="btn btn-blue">SALVAR</button>
+			<c:if test="${not empty usuario.id}">
+				<a href="${urlUsuarioDeletar}?id=${usuario.id}" class="btn btn-red">DELETAR</a>
+			</c:if>
 		</form:form>
 	</main>
 	<c:import url="../templates/botoesFlutuantes.jsp" />

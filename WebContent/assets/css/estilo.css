@@ -58,6 +58,28 @@ body{
 	color: white;
 }
 
+.card{
+	background-color: white;
+	border-style: solid;
+	border-width: 1px;
+	box-shadow: 0px 0px 0px white;
+	flex-basis: 300px;
+	padding: 8px 12px;
+	text-align: center;
+	transform: scale(1);
+	
+	transition: box-shadow 0.4s, transform 0.2s;
+}
+
+.card:hover{
+	box-shadow: -2px -2px 8px #2432cc;
+	transform: scale(1.1);
+}
+
+.card-container{
+	flex-wrap: wrap;
+}
+
 .container{
 	margin: auto;
 	max-width: 1000px;
@@ -66,15 +88,15 @@ body{
 
 .d-block{display: block;}
 
-.d-flex, .top-menu, .top-menu-items{
+.d-flex, .card-container, .top-menu, .top-menu-items{
 	display: flex;
 }
 
-.d-flex > *, .top-menu > .top-menu-items, .top-menu-items > *{
+.d-flex > *, .card-container .card, .top-menu > .top-menu-items, .top-menu-items > *{
 	flex: 1;
 }
 
-.d-flex > * + *, .top-menu-items > * + *{
+.d-flex > * + *, .card-container > * + * .top-menu-items > * + *{
 	margin-left: 32px;
 }
 
@@ -182,6 +204,17 @@ input{
 		flex-grow: 0;
 		height: 30px;
 		width: 30px;
+	}
+}
+
+/*When container reach max width*/
+@media screen and (max-width: 1000px){
+	.container{
+		padding: 0px 16px;
+	}
+	
+	h1, h2, h3{
+		text-align: center;
 	}
 }
 
