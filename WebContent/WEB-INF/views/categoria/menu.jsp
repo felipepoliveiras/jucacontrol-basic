@@ -17,7 +17,7 @@
 </head>
 <body>
 	<c:import url="../templates/header.jsp"/>
-	<main>
+	<main class="container">
 		<h1>Categorias de Ocorrência</h1>
 		<section id="sectionCategorias" class="container">
 		<div class="flex-grid">

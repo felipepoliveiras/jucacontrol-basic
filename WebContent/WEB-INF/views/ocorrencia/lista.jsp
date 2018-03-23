@@ -34,13 +34,19 @@
 		<section id="sectionOcorrencias">
 			<h2>Classificar por: </h2>
 			<%--Filtros de busca --%>
-			<form action="${urlOcorrencias}" method="get">
-				<select name="pesquisa">
-					<c:forEach items="${pesquisas}" var="pesquisa">
-						<option value="${pesquisa}">${pesquisa.descricao}</option>
-					</c:forEach>
-				</select>
-				<button class="btn btn-blue" type="submit">Pesquisar</button>
+			<form action="${urlOcorrencias}" method="get" class="flex-grid ma-b-l" style="max-width: 400px;">
+				<div class="row">
+				<div class="col flex-2">
+					<select name="pesquisa">
+						<c:forEach items="${pesquisas}" var="pesquisa">
+							<option value="${pesquisa}">${pesquisa.descricao}</option>
+						</c:forEach>
+					</select>
+				</div>
+				<div class="col flex-1">
+					<button class="btn btn-blue" type="submit">Pesquisar</button>
+				</div>
+				</div>
 			</form>
 			
 			<%-- Tabela de ocorrências --%>
