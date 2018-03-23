@@ -26,7 +26,6 @@ public class Ocorrencia {
 	
 	@ManyToOne
 	@JoinColumn(name = "emissor_id", nullable = false)
-	@NotNull
 	private Usuario emissor;
 	
 	@ManyToOne
@@ -34,16 +33,16 @@ public class Ocorrencia {
 	private Usuario tecnico;
 	
 	@Column(length = 30, nullable = false, unique = false)
-	@Size(min = 1, max = 30)
+	@Size(min = 1, max = 30, message = "{Size}")
 	@NotNull
 	private String titulo;
 	
 	@Column(nullable = false, unique = false)
 	@Lob
-	@NotNull
+	@NotNull(message = "{NotNull}")
 	private String descricao;
 	
-	@NotNull
+	@NotNull(message = "{NotNull}")
 	private Boolean concluido;
 
 	public Long getId() {

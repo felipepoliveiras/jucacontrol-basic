@@ -10,8 +10,12 @@
 	margin-left: 16px;
 }
 
+.flex-grid .col{
+}
+
 .flex-grid .row{
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .row + .row{

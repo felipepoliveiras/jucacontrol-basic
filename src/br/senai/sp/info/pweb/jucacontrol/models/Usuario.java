@@ -21,27 +21,27 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull
+	@NotNull(message = "{NotNull}")
 	private TiposUsuario tipo = TiposUsuario.COMUM;
 	
 	@Column(length = 30, nullable = false, unique = false)
-	@Size(min = 1, max = 30)
-	@NotNull
+	@Size(min = 1, max = 30, message = "{Size}")
+	@NotNull(message = "{NotNull}")
 	private String nome;
 	
 	@Column(length = 50, nullable = false, unique = false)
-	@Size(min = 1, max = 50)
+	@Size(min = 1, max = 50, message = "{Size}")
 	@NotNull
 	private String sobrenome;
 	
 	@Column(length = 120, nullable = false, unique = true)
-	@Email
-	@NotNull
+	@Email(message = "{Email}")
+	@NotNull(message = "{NotNull}")
 	private String email;
 	
 	@Column(length = 64, nullable = false, unique = false)
-	@Size(min = 1, max = 64)
-	@NotNull
+	@Size(min = 1, max = 64, message = "{Size}")
+	@NotNull(message = "{NotNull}")
 	private String senha;
 	
 	@Transient

@@ -26,17 +26,19 @@
 					<div class="col flex-1">
 						<label for="inputNome">NOME</label>
 						<form:input path="nome" type="text" id="inputNome"/>
-						<form:errors path="nome"/>
+						<form:errors path="nome" element="div" cssClass="error"/>
 					</div>
 					<div class="col flex-2">
 						<label for="inputSobrenome">SOBRENOME</label>
 						<form:input path="sobrenome" type="text" id="inputSobrenome"/>
+						<form:errors path="sobrenome"  element="div" cssClass="error" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col flex-1">
 						<label for="inputEmail">EMAIL</label>
 						<form:input path="email" type="email" id="inputEmail"/>
+						<form:errors path="email"  element="div" cssClass="error" />
 					</div>
 				</div>
 				<c:if test="${empty usuario.id}">
@@ -44,10 +46,12 @@
 						<div class="col flex-1">
 							<label for="inputSenha">SENHA</label>
 							<input name="senha" type="password" id="inputSenha"/>
+							<form:errors path="senha"  element="div" cssClass="error" />
 						</div>
 						<div class="col flex-1">
 							<label for="inputConfirmaSenha">CONFIRMAR SENHA</label>
-							<input type="password" id="inputConfirmaSenha"/>
+							<input type="password" id="inputConfirmaSenha" name="confirmacaoSenha"/>
+							<form:errors path="senha"  element="div" cssClass="error" />
 						</div>
 					</div>
 				</c:if>

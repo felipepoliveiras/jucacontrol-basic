@@ -39,6 +39,7 @@
 									<label>
 										Nome
 										<form:input path="nome" type="text"/>
+										<form:errors path="nome"  element="div" cssClass="error" />
 									</label>
 								</div>
 							</div>

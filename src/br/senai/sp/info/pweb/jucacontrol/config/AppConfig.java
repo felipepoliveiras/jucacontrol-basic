@@ -1,9 +1,11 @@
 package br.senai.sp.info.pweb.jucacontrol.config;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.CacheControl;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -60,5 +62,15 @@ public class AppConfig implements WebMvcConfigurer{
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.
 			addInterceptor(getAutenticacaoPorSessaoInterceptor()).addPathPatterns("/**");
+	}
+	
+	@Bean
+	public MessageSource messageSource() {
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasename("/WEB-INF/messages/validations");
+		messageSource.setDefaultEncoding("UTF-8");
+		messageSource.setCacheSeconds(1);
+		
+		return messageSource;
 	}
 }
