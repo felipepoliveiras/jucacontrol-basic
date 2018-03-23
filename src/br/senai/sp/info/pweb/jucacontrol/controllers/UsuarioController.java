@@ -37,7 +37,7 @@ public class UsuarioController {
 	private SessionUtils sessionUtils;
 	
 	@Autowired
-	private LocalStorage localStorage;
+	private LocalStorage storage;
 	
 	@Autowired
 	private ServletContext context;
@@ -73,16 +73,7 @@ public class UsuarioController {
 		List<Usuario> usuarios = usuarioDao.buscarTodos();
 		
 		//Verifica se o usuário possui foto
-		for (Usuario usuario : usuarios) {
-			//Verifica se existe uma foto no servidor com o id do usuário
-			File arquivoFoto = localStorage.getArquivo("/resources/fotos/" + usuario.getId());
-			System.out.println(arquivoFoto.getAbsolutePath());
-			if(arquivoFoto.exists()) {
-				usuario.setCaminhoFoto(localStorage.getCaminhoRelativo("/resources/fotos/" + usuario.getId()));
-			}else {
-				usuario.setCaminhoFoto(localStorage.getCaminhoRelativo("/assets/images/user.png"));
-			}
-		}
+		storage.aplicarCaminhoFotoEmUsuarios(usuarios);
 		
 		model.addAttribute("usuarios", usuarios);
 		
@@ -157,7 +148,7 @@ public class UsuarioController {
 		//Realiza operações de foto
 		if(foto != null) {
 			try {
-				localStorage.armazenar("/resources/fotos", usuario.getId().toString(), foto.getBytes());
+				storage.armazenar("/resources/fotos", usuario.getId().toString(), foto.getBytes());
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}

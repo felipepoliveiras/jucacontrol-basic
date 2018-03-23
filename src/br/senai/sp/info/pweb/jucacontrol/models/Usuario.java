@@ -1,5 +1,7 @@
 package br.senai.sp.info.pweb.jucacontrol.models;
 
+import java.io.File;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,5 +1,7 @@
 package br.senai.sp.info.pweb.jucacontrol.models;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -42,8 +45,14 @@ public class Ocorrencia {
 	@NotNull(message = "{NotNull}")
 	private String descricao;
 	
-	@NotNull(message = "{NotNull}")
-	private Boolean concluido;
+	@Column(nullable = false)
+	private Date dataCadastro;
+	
+	@Column(nullable = false)
+	private Date dataModificacao;
+
+	@Column(nullable = true)
+	private Date dataConclusao;
 
 	public Long getId() {
 		return id;
@@ -85,14 +94,6 @@ public class Ocorrencia {
 		this.tecnico = tecnico;
 	}
 
-	public Boolean getConcluido() {
-		return concluido;
-	}
-
-	public void setConcluido(Boolean concluido) {
-		this.concluido = concluido;
-	}
-
 	public CategoriaOcorrencia getCategoria() {
 		return categoria;
 	}
@@ -100,4 +101,30 @@ public class Ocorrencia {
 	public void setCategoria(CategoriaOcorrencia categoria) {
 		this.categoria = categoria;
 	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	public Date getDataConclusao() {
+		return dataConclusao;
+	}
+
+	public void setDataConclusao(Date dataConclusao) {
+		this.dataConclusao = dataConclusao;
+	}
+
+	public Date getDataModificacao() {
+		return dataModificacao;
+	}
+
+	public void setDataModificacao(Date dataModificacao) {
+		this.dataModificacao = dataModificacao;
+	}
+	
+	
 }

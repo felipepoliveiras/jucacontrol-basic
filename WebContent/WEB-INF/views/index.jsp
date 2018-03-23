@@ -59,12 +59,12 @@
 			<form:form modelAttribute="usuario" action="${urlAutenticarUsuario}" method="post" style="color: white">
 				<label>
 					E-mail
-					<form:input path="email" type="email" required="required" maxlength="120" id="inputEmail" />
+					<form:input path="email" type="email" required="required" maxlength="120" id="inputEmail" cssStyle="color: white;"/>
 					<form:errors path="email" />
 				</label>
 				<label>
 					Senha
-					<input name="senha" type="password" required="required" maxlength="20" />
+					<input name="senha" type="password" required="required" maxlength="20" cssStyle="color: white;" />
 				</label>
 				<button class="btn" type="submit">ENTRAR</button>
 			</form:form>

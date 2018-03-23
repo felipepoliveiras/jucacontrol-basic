@@ -64,6 +64,8 @@ body{
 	border-width: 1px;
 	box-shadow: 0px 0px 0px white;
 	flex-basis: 300px;
+	flex-grow: 0;
+	flex-shrink: 0;
 	padding: 8px 12px;
 	text-align: center;
 	transform: scale(1);
@@ -77,6 +79,7 @@ body{
 }
 
 .card-container{
+	display: flex;
 	flex-wrap: wrap;
 }
 
@@ -88,19 +91,24 @@ body{
 
 .d-block{display: block;}
 
-.d-flex, .card-container, .top-menu, .top-menu-items{
+.d-flex, .top-menu, .top-menu-items{
 	display: flex;
 }
 
-.d-flex > *, .card-container .card, .top-menu > .top-menu-items, .top-menu-items > *{
+.d-flex > *, .top-menu > .top-menu-items, .top-menu-items > *{
 	flex: 1;
 }
 
-.d-flex > * + *, .card-container > * + * .top-menu-items > * + *{
+.d-flex > * + *{
 	margin-left: 32px;
 }
 
 .d-inline{display: inline}
+
+.error{
+	color: red;
+	font-size: 12px;
+}
 
 .flex-1{flex: 1;}
 .flex-2{flex: 2;}

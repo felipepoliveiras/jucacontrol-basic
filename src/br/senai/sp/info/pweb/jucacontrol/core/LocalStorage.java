@@ -5,11 +5,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
 
 @Component
 public class LocalStorage {
@@ -59,6 +62,23 @@ public class LocalStorage {
 		BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(arquivo));
 		os.write(bytes);
 		os.close();
+	}
+	
+	public void aplicarCaminhoFotoEmUsuarios(List<Usuario> usuarios) {
+		for (Usuario usuario : usuarios) {
+			aplicarCaminhoFotoEmUsuario(usuario);
+		}
+	}
+	
+	public void aplicarCaminhoFotoEmUsuario(Usuario usuario) {
+		//Verifica se existe uma foto no servidor com o id do usuário
+		File arquivoFoto = this.getArquivo("/resources/fotos/" + usuario.getId());
+		System.out.println(arquivoFoto.getAbsolutePath());
+		if(arquivoFoto.exists()) {
+			usuario.setCaminhoFoto(this.getCaminhoRelativo("/resources/fotos/" + usuario.getId()));
+		}else {
+			usuario.setCaminhoFoto(this.getCaminhoRelativo("/assets/images/user.png"));
+		}
 	}
 
 }
