@@ -8,6 +8,7 @@
 
 <c:url value="/" var="raiz" />
 <c:url value="/assets" var="assets" />
+<c:url value="/app" var="urlOcorrencias" />
 <c:url value="/app/ocorrencia" var="urlVisualizarOcorrencia" />
 <c:url value="/app/ocorrencia/nova" var="urlNovaOcorrencia" />
 <c:url value="/app/ocorrencia/assumir" var="urlAssumirOcorrencia" />
@@ -21,7 +22,6 @@
 	<style>
 	#tabelaOcorrencias img{
 		background-image: linear-gradient(to left bottom, #2432cc, #cc29cc, #cc2525);
-		padding: 16px;
 		width: 100px;
 	}
 	</style>
@@ -34,12 +34,13 @@
 		<section id="sectionOcorrencias">
 			<h2>Classificar por: </h2>
 			<%--Filtros de busca --%>
-			<form>
-				<select name="filtro">
-					<option value="TODOS">Todos</option>
-					<option value="EM_ATENDIMENTO">Em atendimento</option>
-					<option value="AGUARDANDO">Aguardando resposta</option>
+			<form action="${urlOcorrencias}" method="get">
+				<select name="pesquisa">
+					<c:forEach items="${pesquisas}" var="pesquisa">
+						<option value="${pesquisa}">${pesquisa.descricao}</option>
+					</c:forEach>
 				</select>
+				<button class="btn btn-blue" type="submit">Pesquisar</button>
 			</form>
 			
 			<%-- Tabela de ocorrências --%>
@@ -69,7 +70,7 @@
 								<p class="ocorrencia-detalhe"><b class="color-pink">Última modificação: </b>
 									<fmt:formatDate value="${ocorrencia.dataModificacao}" pattern="dd/MM/yyyy hh:mm:ss"/>
 								</p>
-								<p class="ocorrencia-detalhe"><b class="color-pink">Data de abertura: </b>
+								<p class="ocorrencia-detalhe"><b class="color-pink">Data de conclusão: </b>
 									<fmt:formatDate value="${ocorrencia.dataConclusao}" pattern="dd/MM/yyyy hh:mm:ss"/>
 								</p>
 							</td>
@@ -80,12 +81,20 @@
 										<a href="${urlAssumirOcorrencia}?id=${ocorrencia.id}">Assumir</a>
 									</c:when>
 									<c:otherwise>
+									
 										<img rel="Imagem do técnico" title="Atendida por ${ocorrencia.tecnico.nome} ${ocorrencia.tecnico.sobrenome}"
 										src="${ocorrencia.tecnico.caminhoFoto}">
 										
-										<c:if test="${ocorrencia.tecnico.id eq usuarioLogado.id }">
-											<a href="${urlEncerrarOcorrencia}?id=${ocorrencia.id}">Encerrar</a>
-										</c:if>
+										
+										<c:choose>
+											<c:when test="${not empty ocorrencia.dataConclusao}">
+												Encerrado
+											</c:when>
+											<c:when test="${usuarioLogado.tipo eq 'ADMINISTRADOR' or 
+															ocorrencia.tecnico.id eq usuarioLogado.id }">
+												<a href="${urlEncerrarOcorrencia}?id=${ocorrencia.id}">Encerrar</a>
+											</c:when>
+										</c:choose>
 									</c:otherwise>
 								</c:choose>
 							</td>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.senai.sp.info.pweb.jucacontrol.core.LocalStorage;
+import br.senai.sp.info.pweb.jucacontrol.core.PesquisaOcorrencias;
 import br.senai.sp.info.pweb.jucacontrol.core.SessionUtils;
 import br.senai.sp.info.pweb.jucacontrol.dao.CategoriaOcorrenciaDAO;
 import br.senai.sp.info.pweb.jucacontrol.dao.OcorrenciaDAO;
@@ -41,8 +42,13 @@ public class OcorrenciaController {
 	private LocalStorage storage;
 		
 	@GetMapping({"", "/"})
-	public String abrirListaOcorrencia(Model model) {
-		List<Ocorrencia> ocorrencias = ocorrenciaDao.buscarTodos();
+	public String abrirListaOcorrencia(@RequestParam(name = "pesquisa", required = false) PesquisaOcorrencias pesquisa, Model model) {
+		
+		if(pesquisa == null) {
+			pesquisa = PesquisaOcorrencias.TODOS;
+		}
+		
+		List<Ocorrencia> ocorrencias = ocorrenciaDao.buscarOcorrencias(pesquisa);
 		
 		//Aplica a foto de perfil em cada técnico
 		for (Ocorrencia ocorrencia : ocorrencias) {
@@ -51,6 +57,7 @@ public class OcorrenciaController {
 			}
 		}
 		model.addAttribute("ocorrencias", ocorrencias);
+		model.addAttribute("pesquisas", PesquisaOcorrencias.values());
 		
 		return "ocorrencia/lista";
 	}
@@ -98,11 +105,16 @@ public class OcorrenciaController {
 				
 				//Aplica a data de conclusão para agora
 				ocorrenciaBuscada.setDataConclusao(new Date());
+				
+				//Altera a ocorrencia no banco de dados
+				ocorrenciaDao.alterar(ocorrenciaBuscada);
 			}else {
 				redirectAttributes.addFlashAttribute("erro", "Você não pode concluir esta ocorrência pois ela não está sob sua responsabilidade");
+				System.out.println("Você não pode concluir esta ocorrência pois ela não está sob sua responsabilidade");
 			}
 		}else {
 			redirectAttributes.addFlashAttribute("erro", "Ocorrência selecionada para encerramento não existe");
+			System.out.println("Ocorrência selecionada para encerramento não existe");
 		}
 		
 		return "redirect:/app";
