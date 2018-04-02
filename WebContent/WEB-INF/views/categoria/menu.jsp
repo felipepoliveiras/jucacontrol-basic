@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:url value="/" var="raiz" />
 <c:url value="/assets" var="assets" />
@@ -31,15 +29,14 @@
 							<h2>Editando categoria: ${categoria.nome}</h2>
 						</c:otherwise>
 					</c:choose>
-					<form:form action="${urlSalvarCategoria}" method="post" modelAttribute="categoria">
-						<form:hidden path="id"/>
+					<form action="${urlSalvarCategoria}" method="post">
+						<input type="hidden" name="id"/>
 						<div class="flex-grid">
 							<div class="row">
 								<div class="col flex-1">
 									<label>
 										Nome
-										<form:input path="nome" type="text"/>
-										<form:errors path="nome"  element="div" cssClass="error" />
+										<input type="text" name="nome"/>
 									</label>
 								</div>
 							</div>
@@ -57,7 +54,7 @@
 								</c:if>
 							</div>
 						</div>
-					</form:form>
+					</form>
 				</div>
 				<div class="col flex-1">
 					<h2>Categorias Cadastradas</h2>

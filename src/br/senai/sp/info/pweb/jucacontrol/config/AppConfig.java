@@ -6,18 +6,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.http.CacheControl;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-
-import br.senai.sp.info.pweb.jucacontrol.interceptors.AutenticacaoPorSessaoInterceptor;
 
 @Configuration
 @Import(value = PersistenceConfig.class)
@@ -51,17 +47,6 @@ public class AppConfig implements WebMvcConfigurer{
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
 		resolver.setMaxUploadSize(5 * 1024 * 1024); //5MB
 		return resolver;
-	}
-	
-	@Bean
-	public AutenticacaoPorSessaoInterceptor getAutenticacaoPorSessaoInterceptor() {
-		return new AutenticacaoPorSessaoInterceptor();
-	}
-	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.
-			addInterceptor(getAutenticacaoPorSessaoInterceptor()).addPathPatterns("/**");
 	}
 	
 	@Bean

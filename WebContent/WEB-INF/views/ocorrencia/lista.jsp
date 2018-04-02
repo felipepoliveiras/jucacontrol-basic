@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 
 <c:url value="/" var="raiz" />
 <c:url value="/assets" var="assets" />
@@ -66,18 +62,18 @@
 							<td>
 								<p class="ocorrencia-id">
 									<a href="${urlVisualizarOcorrencia}/editar?id=${ocorrencia.id}">
-										#<fmt:formatNumber value="${ocorrencia.id}" pattern="###0"/>
+										${ocorrencia.id}
 									</a>
 								</p>
 								<h4>${ocorrencia.titulo}</h4>
 								<p class="ocorrencia-detalhe"><b class="color-pink">Data de abertura: </b>
-									<fmt:formatDate value="${ocorrencia.dataCadastro}" pattern="dd/MM/yyyy hh:mm:ss"/>
+									${ocorrencia.dataCadastro}
 								</p>
 								<p class="ocorrencia-detalhe"><b class="color-pink">Última modificação: </b>
-									<fmt:formatDate value="${ocorrencia.dataModificacao}" pattern="dd/MM/yyyy hh:mm:ss"/>
+									${ocorrencia.dataModificacao}
 								</p>
 								<p class="ocorrencia-detalhe"><b class="color-pink">Data de conclusão: </b>
-									<fmt:formatDate value="${ocorrencia.dataConclusao}" pattern="dd/MM/yyyy hh:mm:ss"/>
+									${ocorrencia.dataConclusao}
 								</p>
 							</td>
 							<%--Quem atendeu ocorrencia/link de atendimento--%>
@@ -88,7 +84,7 @@
 									</c:when>
 									<c:otherwise>
 									
-										<img rel="Imagem do técnico" title="Atendida por ${ocorrencia.tecnico.nome} ${ocorrencia.tecnico.sobrenome}"
+										<img alt="Imagem do técnico" title="Atendida por ${ocorrencia.tecnico.nome} ${ocorrencia.tecnico.sobrenome}"
 										src="${ocorrencia.tecnico.caminhoFoto}">
 										
 										
