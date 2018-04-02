@@ -2,18 +2,13 @@ package br.senai.sp.info.pweb.jucacontrol.controllers;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
 import br.senai.sp.info.pweb.jucacontrol.models.Usuario;
 
@@ -62,18 +57,17 @@ public class UsuarioController {
 		return "redirect:/app/adm/usuario";
 	}
 	
-	@PostMapping( value = {"/app/adm/usuario/salvar"}, consumes = {"multipart/form-data"})
-	public String salvar(@Valid  Usuario usuario, BindingResult brUsuario, 
-						@RequestParam(name = "isAdministrador", required = false) Boolean administrador,
-						@RequestPart(name = "foto", required = false) MultipartFile foto,
-						HttpServletRequest request) {
+	@PostMapping( value = {"/app/adm/usuario/salvar"})
+	public String salvar(Usuario usuario) {
 		
 		return "redirect:/app/adm/usuario";
 	}
 	
 	@PostMapping({"/usuario/autenticar"})
-	public String autenticar(@Valid Usuario usuario, BindingResult brUsuario) {
-		
+	//@Valid - DEtermina que o Spring deve validar o objeto
+	//BindingResult - Armazena os possíveis erros de validação que ocorreram no objeto
+	public String autenticar(Usuario usuario) {
+
 		return "redirect:/app/";
 	}
 	

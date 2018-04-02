@@ -13,15 +13,17 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+//Determina que o SPring (através da integração com o HIbernate) vai iniciar as transações
+//automaticamente para nós
 @EnableTransactionManagement
 public class PersistenceConfig {
 	@Bean
 	public DataSource getDataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/jucacontrol?serverTimezone=UTC");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/jucacontrol_mt3?serverTimezone=UTC");
 		dataSource.setUsername("root");
-		dataSource.setPassword("root");
+		dataSource.setPassword("root132");
 		
 		return dataSource;
 	}
@@ -45,6 +47,7 @@ public class PersistenceConfig {
 		return sessionFactory;
 	}
 	
+	//Criamos este Bean para que o Spring utilize-o para abrir as transações
 	@Bean
 	@Autowired
 	public HibernateTransactionManager getTransactionManager() {
@@ -52,5 +55,5 @@ public class PersistenceConfig {
 		transactionManager.setSessionFactory(getSessionFactory().getObject());
 		
 		return transactionManager;
-}
+	}
 }

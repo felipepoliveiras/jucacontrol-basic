@@ -43,13 +43,6 @@ public class AppConfig implements WebMvcConfigurer{
 	}
 	
 	@Bean
-	public MultipartResolver multipartResolver() {
-		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-		resolver.setMaxUploadSize(5 * 1024 * 1024); //5MB
-		return resolver;
-	}
-	
-	@Bean
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setBasename("/WEB-INF/messages/validations");
